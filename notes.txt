@@ -1,0 +1,38 @@
+- Show build.gradle/gradle.properties
+  - Dependencies and project layout
+- Decide how to get to a collection (wrapper or DBCollection)
+  - First show how a collection is accessed through MongoTemplate
+  - Follow javadoc link to MongoDB docs for DBCollection
+- Find useful collection methods to implement
+  - count()
+  - drop()
+- Decide how to expose those methods
+  - First just allow access to the DBCollection directly
+  - Return template.getCollection(name) from def propertyMissing(String name)
+  - Note that propertyMissing can be inefficient
+    - Show how propertyMissing is called every time
+    - Show metaClass alternative
+      - Add static block with ExpandoMetaClass.enableGlobally()
+      - Cache property after first use with MongoBuilder.metaClass."$name" = coll
+- Now I want to do several operations on a collection in a DSL-like way
+  - Add db.springone {} and run it to show error
+  - Show how you can't just add def springone(Closure cl)
+  - Talk about methodMissing vs invokeMethod
+    - Implement methodMissing using switch/case with default being to return DBCollection (first)
+- Now I want to expand beyond the DBCollection methods
+  - Try to add an insert method and watch it fail
+    - It doesn't fail, though, because there's an insert method on DBCollection
+    - Need to create a wrapper/helper MongoCollection
+  - Two basic ways to go about it
+    - Add a special class that wraps DBCollection and has methods on it
+    - Or add methods dynamically to DBCollection et al
+  - First add a dynamic method onto the DBCollection.metaClass."insert"
+    - Show how that works, but that you have to be careful about scope issues
+  - What if I don't want to expose DBCollection object at all, but my own objects?
+    - Create a MongoCollection class that has references to the right objects on it
+- Insert within a closure works okay, but wouldn't it be cool to do "coll << new Person(...)"?
+  - Implement MongoCollection.leftShift(...)
+  
+http://groovy.codehaus.org/Operator+Overloading
+
+http://groovy.codehaus.org/Using+methodMissing+and+propertyMissing
