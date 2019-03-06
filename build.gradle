@@ -14,7 +14,7 @@ configurations {
 repositories {
   mavenLocal()
   mavenCentral(artifactUrls: [
-               "http://maven.springframework.org/milestone"
+               "https://maven.springframework.org/milestone"
                ])
 }
 
