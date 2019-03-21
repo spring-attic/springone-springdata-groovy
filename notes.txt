@@ -33,6 +33,6 @@
 - Insert within a closure works okay, but wouldn't it be cool to do "coll << new Person(...)"?
   - Implement MongoCollection.leftShift(...)
   
-http://groovy.codehaus.org/Operator+Overloading
+https://groovy.codehaus.org/Operator+Overloading
 
-http://groovy.codehaus.org/Using+methodMissing+and+propertyMissing
+https://groovy.codehaus.org/Using+methodMissing+and+propertyMissing
